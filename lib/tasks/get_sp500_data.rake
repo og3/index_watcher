@@ -14,6 +14,6 @@ namespace :get_sp500_data do
     sp500.day_before_ratio_percent = browser_operation.find_data(Sp500::PERCENT_LOCATION).text.to_f
     sp500.rsi = browser_operation.find_data(Sp500::RSI_LOCATION).text.to_f
     browser_operation.quit_driver
-    sp500.save!
+    begin sp500.save! rescue exit end
   end
 end
