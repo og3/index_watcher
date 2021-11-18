@@ -10,22 +10,18 @@ class Sp500 < ApplicationRecord
     rsi <= 30
   end
 
-  def notice_rsi_under_30
-    "s&p500のrsiが30を下回ったようです。
-    日付：#{date}
-    ポイント：#{point}
-    rsi：#{rsi}"
-  end
-
   def rsi_upper_70?
     rsi >= 70
   end
 
-  def notice_rsi_upper_30
-    "s&p500のrsiが70を上回ったようです。
+  def notice_message(rsi_condition)
+    "s&p500のrsiが#{rsi_condition}。
     日付：#{date}
     ポイント：#{point}
     rsi：#{rsi}"
   end
 
+  def after_notice
+    self.update!(noticed: true)
+  end
 end
