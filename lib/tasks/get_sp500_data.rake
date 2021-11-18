@@ -8,12 +8,19 @@ namespace :get_sp500_data do
     browser_operation.starting_headless_chrome
     browser_operation.get_to(Sp500::URL)
 
-    sp500.date = browser_operation.find_data(Sp500::DATE_LOCATION).text.to_date
-    sp500.point = browser_operation.find_data(Sp500::POINT_LOCATION).text.delete(",").to_f
-    sp500.day_before_ratio = browser_operation.find_data(Sp500::RATIO_LOCATION).text.to_f
-    sp500.day_before_ratio_percent = browser_operation.find_data(Sp500::PERCENT_LOCATION).text.to_f
-    sp500.rsi = browser_operation.find_data(Sp500::RSI_LOCATION).text.to_f
+    params = {}
+    Sp500.data_location_hash.each do |key, xpath|
+      data = browser_operation.find_data(xpath).text
+      params[key] = if key == :date
+                       data.to_date
+                     elsif key == :point
+                       data.delete(",").to_f
+                     else
+                       data.to_f
+                     end
+    end
+
     browser_operation.quit_driver
-    begin sp500.save! rescue exit end
+    sp500.update_or_exit(params)
   end
 end

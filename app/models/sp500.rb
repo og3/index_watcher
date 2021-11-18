@@ -6,6 +6,16 @@ class Sp500 < ApplicationRecord
   PERCENT_LOCATION = "/html/body/div[3]/div/div[1]/div[5]/div[1]/table/tbody/tr[1]/td[4]/span"
   RSI_LOCATION = "/html/body/div[3]/div/div[1]/div[5]/div[1]/table/tbody/tr[1]/td[5]"
 
+
+  def self.data_location_hash
+    { date: Sp500::DATE_LOCATION,
+      point: Sp500::POINT_LOCATION,
+      day_before_ratio: Sp500::RATIO_LOCATION,
+      day_before_ratio_percent: Sp500::PERCENT_LOCATION,
+      rsi: Sp500::RSI_LOCATION,
+    }
+  end
+
   def rsi_under_30?
     rsi <= 30
   end
@@ -23,5 +33,9 @@ class Sp500 < ApplicationRecord
 
   def after_notice
     self.update!(noticed: true)
+  end
+
+  def update_or_exit(params)
+    begin self.update!(params) rescue exit end
   end
 end
