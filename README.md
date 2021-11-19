@@ -1,24 +1,15 @@
-# README
+# インデックス投資のために指数の動きを監視してLINEに通知するbot
+## 仕様
+　現時点での使用。
+- S&P500指数のRSIが30を下回った時と、70を上回った時にLINEに通知する。
+- データの出典：https://nikkeiyosoku.com/spx/rsi/
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## 動作環境
+- rails6
+- ruby2.6.6
+- heroku-20
+- line_message_api
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## 動作の詳細
+- seleniumで「データの出典」のサイトに毎日定時でアクセスし、最新の日付のデータを取得する。
+- 取得したデータ中のrsiがRSIが30を下回った時と、70を上回った時にLINEに通知する。
