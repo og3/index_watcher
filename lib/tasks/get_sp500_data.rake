@@ -21,6 +21,6 @@ namespace :get_sp500_data do
     end
 
     browser_operation.quit_driver
-    sp500.update_or_exit(params)
+    sp500.create_or_exit(params)
   end
 end

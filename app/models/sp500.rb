@@ -35,7 +35,7 @@ class Sp500 < ApplicationRecord
     self.update!(noticed: true)
   end
 
-  def update_or_exit(params)
-    begin self.update!(params) rescue exit end
+  def create_or_exit(params)
+    begin Sp500.create!(params) rescue exit end
   end
 end
