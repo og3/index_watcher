@@ -2,8 +2,6 @@ namespace :sp500_data do
   task get: :environment do
     require_relative "../browser_operation.rb"
 
-    sp500 = Sp500.new
-
     browser_operation = BrowserOperation.new
     browser_operation.starting_headless_chrome
     browser_operation.get_to(Sp500::URL)
@@ -21,7 +19,7 @@ namespace :sp500_data do
     end
 
     browser_operation.quit_driver
-    sp500.create_or_exit(params)
+    begin Sp500.new(params).save! rescue exit end
   end
 
   task notice: :environment do
