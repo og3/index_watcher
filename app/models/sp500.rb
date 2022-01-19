@@ -26,13 +26,15 @@ class Sp500 < ApplicationRecord
 
   def notice_message(rsi_condition)
     "s&p500のrsiが#{rsi_condition}。
+
     日付：#{date}
     ポイント：#{point}
-    rsi：#{rsi}"
+    rsi：#{rsi}
+
+    * データの出典：https://nikkeiyosoku.com/spx/rsi/"
   end
 
   def after_notice
     self.update!(noticed: true)
   end
-
 end
