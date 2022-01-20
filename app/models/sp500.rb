@@ -1,11 +1,10 @@
 class Sp500 < ApplicationRecord
   URL = "https://nikkeiyosoku.com/spx/rsi/"
-  DATE_LOCATION = "/html/body/div[3]/div/div[1]/div[5]/div[1]/table/tbody/tr[1]/td[1]"
-  POINT_LOCATION = "/html/body/div[3]/div/div[1]/div[5]/div[1]/table/tbody/tr[1]/td[2]"
-  RATIO_LOCATION = "/html/body/div[3]/div/div[1]/div[5]/div[1]/table/tbody/tr[1]/td[3]/span"
-  PERCENT_LOCATION = "/html/body/div[3]/div/div[1]/div[5]/div[1]/table/tbody/tr[1]/td[4]/span"
-  RSI_LOCATION = "/html/body/div[3]/div/div[1]/div[5]/div[1]/table/tbody/tr[1]/td[5]"
-
+  DATE_LOCATION = "/html/body/div[3]/div/div[1]/div[6]/div[1]/table/tbody/tr[1]/td[1]"
+  POINT_LOCATION = "/html/body/div[3]/div/div[1]/div[6]/div[1]/table/tbody/tr[1]/td[2]"
+  RATIO_LOCATION = "/html/body/div[3]/div/div[1]/div[6]/div[1]/table/tbody/tr[1]/td[3]/span"
+  PERCENT_LOCATION = "/html/body/div[3]/div/div[1]/div[6]/div[1]/table/tbody/tr[1]/td[4]/span"
+  RSI_LOCATION = "/html/body/div[3]/div/div[1]/div[6]/div[1]/table/tbody/tr[1]/td[5]"
 
   def self.data_location_hash
     { date: Sp500::DATE_LOCATION,
