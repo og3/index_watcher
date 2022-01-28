@@ -8,6 +8,7 @@ namespace :sp500_data do
 
     params = {}
     Sp500.data_location_hash.each do |key, xpath|
+      sleep(5)
       data = browser_operation.find_data(xpath).text
       params[key] = if key == :date
                        data.to_date
