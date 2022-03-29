@@ -1,6 +1,6 @@
 namespace :sp500_data do
   task get: :environment do
-    require_relative "../browser_operation.rb"
+    require_relative '../browser_operation'
 
     browser_operation = BrowserOperation.new
     browser_operation.starting_headless_chrome
@@ -11,29 +11,41 @@ namespace :sp500_data do
       sleep(5)
       data = browser_operation.find_data(xpath).text
       params[key] = if key == :date
-                       data.to_date
-                     elsif key == :point
-                       data.delete(",").to_f
-                     else
-                       data.to_f
-                     end
+                      data.to_date
+                    elsif key == :point
+                      data.delete(',').to_f
+                    else
+                      data.to_f
+                    end
     end
 
     browser_operation.quit_driver
-    begin Sp500.new(params).save! rescue exit end
+    begin
+      Sp500.new(params).save!
+    rescue StandardError
+      exit
+    end
   end
 
   task notice: :environment do
-    require_relative "../line_messaging_api.rb"
+    require_relative '../line_messaging_api'
 
-    sp500 = Sp500.last
+    latest_sp500 = Sp500.last
 
-    exit if sp500.noticed?
-    exit unless sp500.rsi_under_30? || sp500.rsi_upper_70?
+    exit if latest_sp500.noticed?
 
-    message = sp500.rsi_under_30? ? sp500.notice_message("30を下回ったようです") : sp500.notice_message("70を上回ったようです")
+    message = ''
+    message << "ポイントが直近3日間の合計で150ポイント変動したようです。\n" if latest_sp500.reached_target_point_range?
+    message << "rsiが30を下回ったようです\n" if latest_sp500.rsi_under_30?
+    message << "rsiが70を上回ったようです\n" if latest_sp500.rsi_upper_70?
+
+    if message.present?
+      message << latest_sp500.sp500_condition_message
+    else
+      exit
+    end
 
     LineMessagingApi.broadcast(message)
-    sp500.after_notice
+    latest_sp500.update_noticed_flag
   end
 end
