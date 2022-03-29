@@ -35,7 +35,7 @@ namespace :sp500_data do
     exit if latest_sp500.noticed?
 
     message = ''
-    message << "ポイントが直近3日間の合計で150ポイント変動したようです。\n" if latest_sp500.reached_target_point_range?
+    message << "ポイントが直近3日間の合計で#{Sp500::TARGET_POINT_RANGE_ABS}ポイント変動したようです。\n" if latest_sp500.reached_target_point_range?
     message << "rsiが30を下回ったようです\n" if latest_sp500.rsi_under_30?
     message << "rsiが70を上回ったようです\n" if latest_sp500.rsi_upper_70?
 
