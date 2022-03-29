@@ -5,7 +5,7 @@ class Sp500 < ApplicationRecord
   RATIO_LOCATION = '/html/body/div[3]/div/div[1]/div[6]/div[1]/table/tbody/tr[1]/td[3]/span'.freeze
   PERCENT_LOCATION = '/html/body/div[3]/div/div[1]/div[6]/div[1]/table/tbody/tr[1]/td[4]/span'.freeze
   RSI_LOCATION = '/html/body/div[3]/div/div[1]/div[6]/div[1]/table/tbody/tr[1]/td[5]'.freeze
-  TARGET_POINT_RANGE_ABS = 100
+  TARGET_POINT_RANGE_ABS = 100.0
   PERIOD_DAYS = 3
 
   def self.data_location_hash
