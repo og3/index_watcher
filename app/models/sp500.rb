@@ -31,7 +31,8 @@ class Sp500 < ApplicationRecord
   end
 
   def sp500_condition_message
-    "日付：#{date}
+    "
+    日付：#{date}
     ポイント：#{point}
     rsi：#{rsi}
 
